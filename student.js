@@ -16,14 +16,47 @@ const map = new google.maps.Map(document.getElementById("map"), {
   zoom: 15,
 });
 
+
+
+
+
+
+
+
+//1
 const busMarker = new google.maps.Marker({
   map: map,
   title: "College Bus",
   icon: {
-    url: "https://cdn-icons-png.flaticon.com/512/61/61168.png", // bus icon
-    scaledSize: new google.maps.Size(50, 50)
+    url: "busbg.png", // bus icon
+    scaledSize: new google.maps.Size(100, 50)
   }
 });
+
+
+
+
+
+
+
+//2
+// When the map zoom changes, resize the bus
+map.addListener("zoom_changed", () => {
+  const zoom = map.getZoom();
+  const scale = zoom / 14; // 14 = your base zoom level
+  const newSize = new google.maps.Size(100 * scale, 50 * scale);
+
+  busMarker.setIcon({
+    url: "busbg.png",
+    scaledSize: newSize
+  });
+});
+
+
+
+
+
+
 
 // ----- 3. Get Live Data from Firebase -----
 onValue(ref(db, "buses/bus1"), (snapshot) => {
